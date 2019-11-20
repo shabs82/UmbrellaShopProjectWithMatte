@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UmbrellaShop.Core.Entity\UmbrellaShop.Core.Entity.csproj" />
+    <ProjectReference Include="..\UmbrellaShop.Core\UmbrellaShop.Core.csproj" />
+    <ProjectReference Include="..\UmbrellaShop.Infrastructure.SQLData\UmbrellaShop.Infrastructure.SQLData.csproj" />
+  </ItemGroup>
+
+</Project>

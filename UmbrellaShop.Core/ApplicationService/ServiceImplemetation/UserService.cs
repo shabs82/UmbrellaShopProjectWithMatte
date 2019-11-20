@@ -57,7 +57,7 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplemetation
             {
                 throw new NullReferenceException("Invalid User");
             }
-            if (!_authenticationHelper.VerifyPassword(loginInputModel.Password, user.PasswordHash, user.PasswordSalt))
+            if (!_authenticationHelper.VerifyPasswordHash(loginInputModel.Password, user.PasswordHash, user.PasswordSalt))
             {
                 throw new ArgumentException("Invalid Password");
             }

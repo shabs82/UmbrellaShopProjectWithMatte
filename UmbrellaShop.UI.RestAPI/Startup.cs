@@ -20,6 +20,7 @@ namespace UmbrellaShop.UI.RestAPI
 {
     public class Startup
     {
+       
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
@@ -97,11 +98,12 @@ namespace UmbrellaShop.UI.RestAPI
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<UmbrellaShopContext>();
+                    DbInitializer dbInitializer = scope.ServiceProvider.GetService<DbInitializer>();
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
-                    DbInitializer.Seed(context);
-
+                    dbInitializer.Seed(context);
                 }
+
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -110,8 +112,9 @@ namespace UmbrellaShop.UI.RestAPI
                 {
 
                     var context = scope.ServiceProvider.GetRequiredService<UmbrellaShopContext>();
+                    DbInitializer dbInitializer = scope.ServiceProvider.GetService<DbInitializer>();
                     context.Database.EnsureCreated();
-                    DbInitializer.Seed(context);
+                    dbInitializer.Seed(context);
 
                 }
                 app.UseHsts();

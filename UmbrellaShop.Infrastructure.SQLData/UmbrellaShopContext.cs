@@ -9,6 +9,7 @@ namespace UmbrellaShop.Infrastructure.SQLData
         public DbSet<Umbrella> Umbrellas { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<User> User { get; set; }
 
         public UmbrellaShopContext(DbContextOptions<UmbrellaShopContext> opt) : base(opt) { }
 

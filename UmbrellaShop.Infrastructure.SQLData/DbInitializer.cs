@@ -1,17 +1,25 @@
 ﻿using UmbrellaShop.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using Remotion.Linq.Clauses;
 using UmbrellaShop.Core.ApplicationService;
+using UmbrellaShop.Core.Helper;
 
 namespace UmbrellaShop.Infrastructure.SQLData
 {
     public class DbInitializer
     {
-        private static object _authenticationHelper;
+        private readonly IAuthenticationHelper _authenticationHelper;
 
-        public static void Seed(UmbrellaShopContext context)
+
+        public DbInitializer(IAuthenticationHelper authenticationHelper)
+        {
+            _authenticationHelper = authenticationHelper;
+        }
+
+        public void Seed(UmbrellaShopContext context)
         {
             var listOfUmbrellas = new List<Umbrella>();
             var listOfCustomer = new List<Customer>();
@@ -22,10 +30,11 @@ namespace UmbrellaShop.Infrastructure.SQLData
             _authenticationHelper.CreatePasswordHash(password, out byte[] passwordHashAdmin, out byte[] passwordSaltAdmin);
             _authenticationHelper.CreatePasswordHash(password, out byte[] passwordHashUser, out byte[] passwordSaltUser);
 
-           var User1 = new User{ Username = "Admin", Password = "passwordHashAdmin", IsAdmin = true };
-           var User2 = new User{ Username = "User", Password = "passwordHashUser", IsAdmin = false };
-           listofUser.Add(User1);
-           listofUser.Add(User2);
+            var User1 = new User { Username = "Admin", PasswordHash = passwordHashAdmin, PasswordSalt = passwordSaltAdmin, IsAdmin = true };
+            var User2 = new User { Username = "User", PasswordHash = passwordHashUser, PasswordSalt = passwordSaltUser, IsAdmin = false };
+          listofUser.Add(User1);
+          listofUser.Add(User2);
+
 
             var Customer1 = new Customer { FirstName = "Dude", LastName = "Son", Address = "Dirty Street", Email = "dude.son@xD.com", PhoneNumber = "66 66 66 66" };
             var Customer2 = new Customer { FirstName = "Big", LastName = "Lebowski", Address = "Dirty Street", Email = "dude.son@xD.com", PhoneNumber = "66 66 66 66" };
@@ -59,7 +68,7 @@ namespace UmbrellaShop.Infrastructure.SQLData
             context.Umbrellas.AddRange(listOfUmbrellas);
             context.Customers.AddRange(listOfCustomer);
             context.Orders.AddRange(listofOrders);
-            context.Users.AddRange(listofUser);
+            context.User.AddRange(listofUser);
             context.SaveChanges();
         }
     }

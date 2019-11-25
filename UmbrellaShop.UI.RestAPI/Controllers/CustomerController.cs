@@ -40,7 +40,7 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
         {
             _customerService.UpdateCustomer(id, customer);
         }
-
+        
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

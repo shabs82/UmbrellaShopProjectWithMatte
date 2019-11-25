@@ -13,6 +13,7 @@ using UmbrellaShop.Core.ApplicationService;
 using UmbrellaShop.Core.ApplicationService.ServiceImplementation;
 using UmbrellaShop.Core.ApplicationService.ServiceImplemetation;
 using UmbrellaShop.Core.DomainService;
+using UmbrellaShop.Core.Helper;
 using UmbrellaShop.Infrastructure.SQLData;
 using UmbrellaShop.Infrastructure.SQLData.Repositories;
 
@@ -65,12 +66,16 @@ namespace UmbrellaShop.UI.RestAPI
                
             }
 
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUmbrellaRepository, UmbrellaRepository>();
             services.AddScoped<IUmbrellaService, UmbrellaService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.AddScoped<DbInitializer, DbInitializer>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().AddJsonOptions(options =>
             {

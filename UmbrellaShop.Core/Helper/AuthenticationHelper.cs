@@ -36,7 +36,7 @@ namespace UmbrellaShop.Core.Helper
 
             if (user.IsAdmin)
             {
-                claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
+                claims.Add(new Claim(ClaimTypes.Role, "administrator"));
             }
 
             var token = new JwtSecurityToken(

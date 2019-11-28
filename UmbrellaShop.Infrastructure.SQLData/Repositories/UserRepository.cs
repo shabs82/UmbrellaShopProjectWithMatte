@@ -27,7 +27,7 @@ namespace UmbrellaShop.Infrastructure.SQLData.Repositories
 
         public IEnumerable<User> ReadAll()
         {
-            throw new NotImplementedException();
+            return _context.User;
         }
 
         public User ReadById(int id)

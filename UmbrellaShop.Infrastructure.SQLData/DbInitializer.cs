@@ -9,7 +9,7 @@ using UmbrellaShop.Core.Helper;
 
 namespace UmbrellaShop.Infrastructure.SQLData
 {
-    public class DbInitializer
+    public class DbInitializer : IDbInitializer
     {
         private readonly IAuthenticationHelper _authenticationHelper;
 

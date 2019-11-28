@@ -74,8 +74,10 @@ namespace UmbrellaShop.UI.RestAPI
             services.AddScoped<IUmbrellaService, UmbrellaService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
-            services.AddScoped<DbInitializer, DbInitializer>();
+
+            services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
+            services.AddTransient<IDbInitializer, DbInitializer>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -99,17 +101,19 @@ namespace UmbrellaShop.UI.RestAPI
             app.UseCors("AllowSpecificOrigin");
 
             if (env.IsDevelopment())
-            {
+            {               
+                app.UseDeveloperExceptionPage();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<UmbrellaShopContext>();
-                    DbInitializer dbInitializer = scope.ServiceProvider.GetService<DbInitializer>();
+                    var services = scope.ServiceProvider;
+                    var context = scope.ServiceProvider.GetService<UmbrellaShopContext>();
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
+                    var dbInitializer = services.GetService<IDbInitializer>();
                     dbInitializer.Seed(context);
                 }
 
-                app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -117,7 +121,7 @@ namespace UmbrellaShop.UI.RestAPI
                 {
 
                     var context = scope.ServiceProvider.GetRequiredService<UmbrellaShopContext>();
-                    DbInitializer dbInitializer = scope.ServiceProvider.GetService<DbInitializer>();
+                    IDbInitializer dbInitializer = scope.ServiceProvider.GetService<IDbInitializer>();
                     context.Database.EnsureCreated();
                     dbInitializer.Seed(context);
 

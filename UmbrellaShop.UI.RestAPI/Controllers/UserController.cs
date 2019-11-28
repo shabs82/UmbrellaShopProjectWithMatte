@@ -25,11 +25,12 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
 
             // POST api/users -- LOG IN
             [HttpPost]
-            public ActionResult Login([FromBody] LoginInputModel loginInputModel)
+            public ActionResult Post([FromBody] LoginInputModel loginInputModel)
             {
                 try
                 {
                     User user = _userService.ValidateUser(loginInputModel);
+
                     string token = _authenticationHelper.GenerateToken(user);
                     return Ok(new { user.Username, user.IsAdmin, token });
                 }

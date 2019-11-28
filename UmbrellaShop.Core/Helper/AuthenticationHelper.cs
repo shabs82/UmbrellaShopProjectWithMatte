@@ -13,7 +13,7 @@ namespace UmbrellaShop.Core.Helper
         private readonly byte[] _secretBytes;
 
 
-        public AuthenticationHelper(Byte[] secret)
+        public AuthenticationHelper(byte[] secret)
         {
             _secretBytes = secret;
         }

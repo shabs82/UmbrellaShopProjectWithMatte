@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using UmbrellaShop.Core.ApplicationService;
 using UmbrellaShop.Core.Entity;
 
@@ -14,6 +15,7 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
             _service = service;
         }
         // GET api/values
+        [Authorize(Roles = "administrator")] //Admin can call
         [HttpGet]
         public ActionResult<IEnumerable<Umbrella>> Get()
         {
@@ -21,6 +23,7 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
         }
 
         // GET api/values/5
+        [Authorize] //All who have token can call
         [HttpGet("{id}")]
         public Umbrella Get(int id)
         {

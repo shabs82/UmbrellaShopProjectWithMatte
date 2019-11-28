@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UmbrellaShop.Core.ApplicationService;
@@ -20,16 +21,19 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
         {
             _customerService = customerService;
         }
+
         [HttpPost]
         public ActionResult Post([FromBody] Customer customer)
         {
             return Ok(_customerService.CreateCustomer(customer));
         }
+        [Authorize]
         [HttpGet("{id}")]
         public Customer GetCustomerByID(int id)
         {
             return _customerService.GetCustomerByID(id);
         }
+        [Authorize(Roles = "administrator")]
         [HttpGet]
         public ActionResult<IEnumerable<Customer>> GetCustomer()
         {
